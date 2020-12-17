@@ -1,0 +1,5 @@
+node_modules/
+.vscode
+workspace.code-workspace
+artifacts/
+cache/
