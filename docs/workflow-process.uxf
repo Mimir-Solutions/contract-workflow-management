@@ -1,0 +1,29 @@
+<diagram program="umletino" version="14.4.0-SNAPSHOT"><zoom_level>10</zoom_level><help_text>Space for diagram notes</help_text><element><id>UMLSpecialState</id><coordinates><x>120</x><y>180</y><w>20</w><h>20</h></coordinates><panel_attributes>type=final</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLState</id><coordinates><x>240</x><y>170</y><w>100</w><h>40</h></coordinates><panel_attributes>FrontController
+bg=blue</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>120</x><y>180</y><w>140</w><h>30</h></coordinates><panel_attributes>lt=&lt;-</panel_attributes><additional_attributes>120;10;10;10</additional_attributes></element><element><id>UMLState</id><coordinates><x>390</x><y>150</y><w>240</w><h>80</h></coordinates><panel_attributes>Encode arguments Pass msgsender, 
+workflow ID, and encoded arguments 
+as btes[] ordered by step
+bg=cyan
+type=sender</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>330</x><y>180</y><w>80</w><h>30</h></coordinates><panel_attributes>lt=&lt;-</panel_attributes><additional_attributes>60;10;10;10</additional_attributes></element><element><id>UMLState</id><coordinates><x>860</x><y>130</y><w>280</w><h>120</h></coordinates><panel_attributes>Look up WorkflowID
+Confirm active
+Lookup User auth for Workflow ID
+Look up Step IDs for WorkflowID
+Look up Adaptors for StepID
+Lookup User auth for workflow Adaptor
+bg=cyan
+type=receiver</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLState</id><coordinates><x>680</x><y>160</y><w>130</w><h>60</h></coordinates><panel_attributes>WorkflowOrchestrator
+bg=blue</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLState</id><coordinates><x>1550</x><y>50</y><w>140</w><h>70</h></coordinates><panel_attributes>StepAdaptor
+bg=green</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>620</x><y>180</y><w>80</w><h>30</h></coordinates><panel_attributes>lt=&lt;-</panel_attributes><additional_attributes>60;10;10;10</additional_attributes></element><element><id>Relation</id><coordinates><x>800</x><y>180</y><w>80</w><h>30</h></coordinates><panel_attributes>lt=&lt;-</panel_attributes><additional_attributes>60;10;10;10</additional_attributes></element><element><id>Relation</id><coordinates><x>1130</x><y>180</y><w>120</w><h>30</h></coordinates><panel_attributes>lt=&lt;-</panel_attributes><additional_attributes>100;10;10;10</additional_attributes></element><element><id>UMLState</id><coordinates><x>1230</x><y>150</y><w>240</w><h>80</h></coordinates><panel_attributes>Execute workflow steps
+return final result of work
+bg=cyan
+type=sender</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>1460</x><y>60</y><w>110</w><h>150</h></coordinates><panel_attributes>lt=&lt;-</panel_attributes><additional_attributes>90;10;10;130</additional_attributes></element><element><id>UMLState</id><coordinates><x>1730</x><y>20</y><w>280</w><h>120</h></coordinates><panel_attributes>Decode bytes arguments as sanity check
+Call Step ExecutionModule
+bg=cyan
+type=receiver</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLObject</id><coordinates><x>900</x><y>280</y><w>220</w><h>90</h></coordinates><panel_attributes>StepIDs are stored as an array 
+in descending order of preference
+Potentially use EnumerableSet
+Or Array utility
+bg=red</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>1460</x><y>90</y><w>110</w><h>120</h></coordinates><panel_attributes>lt=&lt;-</panel_attributes><additional_attributes>10;100;90;10</additional_attributes></element><element><id>Relation</id><coordinates><x>1680</x><y>80</y><w>70</w><h>30</h></coordinates><panel_attributes>lt=&lt;-</panel_attributes><additional_attributes>50;10;10;10</additional_attributes></element><element><id>UMLState</id><coordinates><x>1730</x><y>190</y><w>280</w><h>120</h></coordinates><panel_attributes>Decode bytes arguments as sanity check
+Call Step ExecutionModule
+bg=cyan
+type=receiver</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>1660</x><y>250</y><w>90</w><h>30</h></coordinates><panel_attributes>lt=&lt;-</panel_attributes><additional_attributes>70;10;10;10</additional_attributes></element><element><id>UMLState</id><coordinates><x>1530</x><y>220</y><w>140</w><h>70</h></coordinates><panel_attributes>StepAdaptor
+bg=green</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>1460</x><y>180</y><w>90</w><h>110</h></coordinates><panel_attributes>lt=&lt;-</panel_attributes><additional_attributes>10;10;70;90</additional_attributes></element><element><id>Relation</id><coordinates><x>1460</x><y>180</y><w>90</w><h>80</h></coordinates><panel_attributes>lt=&lt;-</panel_attributes><additional_attributes>70;60;10;10</additional_attributes></element></diagram>
