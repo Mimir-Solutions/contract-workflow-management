@@ -1,18 +1,21 @@
 // SPDX-License-Identifier: MIT
-pragma solidity 0.7.5;
+pragma solidity 0.8.0;
 
 import "hardhat/console.sol";
+
+import "./dependencies/holyzeppelin/datatypes/collections/EnumerableSet.sol";
 
 library Workflow {
 
   struct Step {
     bool _isActive;
-    bytes4 _interfaceID;
+    bytes32 _interfaceID;
     bytes4 _functionSelector;
-    
   }
 
-  struct Workflow {
-    mapping( bytes4 => Step ) _workflow;
+  function addStep( Step step_, bool isActive_, bytes32 interfaceIDToAdd_, bytes4 functionSelectorToAdd_ ) internal returns ( bool isActive_ ) {
+    step_._isActive = isActive_;
+    step_._interfaceID = interfacaIDToAdd_;
+    step_._functionSelector = functionSelectorToAdd_;
   }
 }

@@ -11,10 +11,13 @@ import "hardhat/console.sol";
  * Workflow ID is generated like ERC165 interface ID;
  * bytes4(keccak256(STEP_ID)) ^ bytes4(keccak256(STEP_ID)) . . .
  */
-contract WorkflowOrchestrator {
+contract WorkflowOrchestrator is ERC1820Implementer  {
 
   IWorkflowRegistry private _workflowRegistry;
   
+  // TODO register it's interfaces for itself.
+  constructor() {}
+
   
 
 }

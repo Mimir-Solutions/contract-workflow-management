@@ -17,7 +17,7 @@ import "./dependencies/holyzeppelin/datatypes/collections/EnumerableSet.sol";
  * Workflow ID is generated like ERC165 interface ID;
  * bytes4(keccak256(STEP_ID)) ^ bytes4(keccak256(STEP_ID)) . . .
  */
-interface WorkflowRegistry is IERC1820EnhancedRegistry, IOwnable {
+contract WorkflowRegistry is ERC1820EnhancedRegistry, Ownable {
 
   using Workflow for Workflow.Step;
   using EnumerableSet for EnumerableSet.AddressSet;
