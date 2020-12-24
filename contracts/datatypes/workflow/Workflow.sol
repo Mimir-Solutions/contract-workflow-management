@@ -3,8 +3,6 @@ pragma solidity 0.8.0;
 
 import "hardhat/console.sol";
 
-import "./dependencies/holyzeppelin/datatypes/collections/EnumerableSet.sol";
-
 library Workflow {
 
   struct Step {
