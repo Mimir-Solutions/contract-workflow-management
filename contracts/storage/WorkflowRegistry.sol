@@ -1,12 +1,12 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-pragma solidity 0.8.0;
+pragma solidity 0.7.6;
 
 import "hardhat/console.sol";
 
-import "./dependencies/holyzeppelin/contracts/introspection/ERC1820EnhancedRegistry.sol";
-import "./dependencies/holyzeppelin/access/Ownable.sol";
-import "./datatypes/workflow/Workflow.sol";
-import "./dependencies/holyzeppelin/datatypes/collections/EnumerableSet.sol";
+import "../dependencies/holyzeppelin/contracts/introspection/ERC1820/ERC1820EnhancedRegistry.sol";
+import "../dependencies/holyzeppelin/contracts/access/Ownable.sol";
+import "../datatypes/workflow/Workflow.sol";
+import "../dependencies/holyzeppelin/contracts/datatypes/collections/EnumerableSet.sol";
 
 // TODO: Consider implementation as a ERC1820 Registry
 /*
