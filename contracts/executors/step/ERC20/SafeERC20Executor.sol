@@ -12,7 +12,7 @@ contract SafeERC20StepExecutor is SafeERC20StepExecutor {
     }
 
     function safeTransferFrom(IERC20 token_, address from_, address to_, uint256 value_ ) external virtual {
-        token.safeTransferFrom(IERC20 token, address from, address to, uint256 value)
+        token.safeTransferFrom( token, from, to, value);
     }
 
     /**

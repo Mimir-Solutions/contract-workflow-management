@@ -5,10 +5,10 @@ import "hardhat/console.sol";
 
 contract USV2CLiquiditySwapFrontController {
 
-  IWorkflowRegistry private _workflowRegistry;
-  IWorkflowOrchestrator private _workflowOrchestrator;
+  // IWorkflowRegistry private _workflowRegistry;
+  // IWorkflowOrchestrator private _workflowOrchestrator;
   
-  function adjustPrice(address _tokenToRaise, address[] memory _lpToSwap, uint256 _amountToAdjust, bool isLower) public returns (bool) {
+  // function adjustPrice(address _tokenToRaise, address[] memory _lpToSwap, uint256 _amountToAdjust, bool isLower) public returns (bool) {
 
-  }
+  // }
 }

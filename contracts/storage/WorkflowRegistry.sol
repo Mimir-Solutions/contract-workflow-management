@@ -89,7 +89,7 @@ contract WorkflowRegistry is ERC1820EnhancedRegistry, Ownable {
   }
 
   function registerStepID( string memory erc1820InterfaceIDToEncode_, string memory functionSignature_ ) internal onlyOwner() {
-    return _registerStepID( erc1820InterfaceIDToEncode_, functionSignature_ )
+    return _registerStepID( erc1820InterfaceIDToEncode_, functionSignature_ );
   }
 
   function _registerStepID( string storage erc1820InterfaceIDToEncode_, string storage functionSignature_ ) internal onlyOwner() returns ( bytes32 stepIDToRegister_ ) {
@@ -142,15 +142,17 @@ contract WorkflowRegistry is ERC1820EnhancedRegistry, Ownable {
   /**
    * Returns 2 arrays of the interface ID and function selectors in the same order as provided.
    */
-  function _getSteps( bytes32[] stepIDs_ ) internal view returns ( bytes32[] memory stepInterfaceIDs_, bytes4[] memory stepFunctionSelectors_ ) {
-    bytes32[] memory stepInterfaceIDs_;
-    bytes4[] memory stepFunctionSelectors_;
+  function _getSteps( bytes32[] stepIDs_ ) internal view returns ( bytes32[] memory stepInterfaceIDsToReturn_, bytes4[] memory stepFunctionSelectorsToReturn_ ) {
+    bytes32[] memory stepInterfaceIDsToReturn_;
+    bytes4[] memory stepFunctionSelectorsToReturn_;
 
     for( iteration_ = 0; ( stepIDs_.length -1 ) >= iteration_ ; iteration++ ) {
       ( bytes32 stepInterfaceID_, bytes4 stepFunctionSelector_ ) = _getStep( stepIDs_[iteration_] );
-      stepInterfaceIDs_.push(stepInterfaceID_);
-      stepFunctionSelectors_.push(stepFunctionSelector_);
+      stepInterfaceIDsToReturn_.push(stepInterfaceID_);
+      stepFunctionSelectorsToReturn_.push(stepFunctionSelector_);
     }
+
+    return ( stepInterfaceIDsToReturn_, stepFunctionSelectorsToReturn_);
   }
 
   function getSteps( bytes32[] stepIDs_ ) internal view returns ( bytes32[] memory stepInterfaceIDs_, bytes4[] memory stepFunctionSelectors_ ) {
@@ -191,10 +193,10 @@ contract WorkflowRegistry is ERC1820EnhancedRegistry, Ownable {
     return _getStepExecutor( stepID_ );
   }
 
-  function _getStepExecutors( bytes32[] stepIDs_ ) internal view returns ( address[] stepExecutors_ ) {
-    address[] stepExecutors_;
+  function _getStepExecutors( bytes32[] stepIDs_ ) internal view returns ( address[] stepExecutorAddresses_ ) {
+    address[] stepExecutorAddresses_;
     for( iteration_ = 0; ( stepIDs_.length - 1 ) >= iteration_; iteration_++ ) {
-      stepExecutors_.push(_getStepExecutor( stepIDs_[iteration_] ) );
+      stepExecutorAddresses_.push(_getStepExecutor( stepIDs_[iteration_] ) );
     }
   }
 
@@ -221,14 +223,14 @@ contract WorkflowRegistry is ERC1820EnhancedRegistry, Ownable {
     }
   }
 
-  function _encodeWorkflow( string[] workflowERC1820InterfaaceIDs_, string[] workflowFunctionSelectors_ ) internal pure returns ( bytes32 workflowID_, bytes32[] stepIDs_ ) {
+  function _encodeWorkflow( string[] workflowERC1820InterfaaceIDs_, string[] workflowFunctionSelectors_ ) internal pure returns ( bytes32 workflowID_, bytes32[] encodedStepIDs_ ) {
     require( ( workflowERC1820InterfaaceIDs_.length == workflowFunctionSelectors_.length ) );
-    bytes32 workflowID_;
-    bytes32[] stepIDs_;
+    bytes32 encodedWorkflowID_;
+    bytes32[] encodedStepIDs_;
     for( iteration_ = 0; ( workflowERC1820InterfaaceIDs_.length -1 ) >= iteration_; iteration_ ) {
       bytes32 stepID_ = _encodeStepID( _encodeERC1820InterfaceID( workflowERC1820InterfaaceIDs_[iteration_] ), _encodeFunctionSelector( workflowFunctionSelectors_[iteration_] ) );
-      stepIDs_.push(stepID_);
-      workflowID_ = bytes32( workflowID_ ^ stepID_ );
+      encodedStepIDs_.push(stepID_);
+      encodedWorkflowID_ = bytes32( encodedWorkflowID_ ^ stepID_ );
     }
   }
 
@@ -247,7 +249,7 @@ contract WorkflowRegistry is ERC1820EnhancedRegistry, Ownable {
   function setDefaultStepExecutor( address stepExecutorAddress_, string stepExecutor1820InterfaceID_ ) external onlyOwner() {
     require( stepExecutorAddress_.isContract() );
     bytes32 encodedStepExecutor1820InterfaceID_ = _encodeERC1820InterfaceID( stepExecutor1820InterfaceID_ );
-    require( _stepExecutorExists( address stepExecutorAddress_, bytes32 encodedStepExecutor1820InterfaceID_ ) );
+    require( _stepExecutorExists( stepExecutorAddress_, encodedStepExecutor1820InterfaceID_ ) );
     _setDefaultStepExecutor( stepExecutorAddress_, encodedStepExecutor1820InterfaceID_ );
   }
 }
