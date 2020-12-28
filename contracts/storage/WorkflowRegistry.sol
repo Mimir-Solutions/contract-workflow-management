@@ -32,11 +32,11 @@ contract WorkflowRegistry is ERC1820EnhancedRegistry, Ownable {
 
   bytes32[] public _stepIDs;
 
-  mapping( bytes32 => Step ) private _stepForStepID;
+  mapping( bytes32 => Workflow.Step ) private _stepForStepID;
 
   mapping( bytes32 => EnumerableSet.AddressSet ) private _stepExecutors;
 
-  /**
+  /*
    * bytes32 = WorkflowID is bytes32(byes32(STEP_EXECUTOR_ERC1820_INTERFACE_ID) ^ bytes32(FUNCTION_SELECTOR)) ^ bytes32(byes32(STEP_EXECUTOR_ERC1820_INTERFACE_ID) ^ bytes32(FUNCTION_SELECTOR)) . . .
    *  Repeat function selectors for each pair
    */
@@ -92,7 +92,7 @@ contract WorkflowRegistry is ERC1820EnhancedRegistry, Ownable {
     return _registerStepID( erc1820InterfaceIDToEncode_, functionSignature_ );
   }
 
-  function _registerStepID( string storage erc1820InterfaceIDToEncode_, string storage functionSignature_ ) internal onlyOwner() returns ( bytes32 stepIDToRegister_ ) {
+  function _registerStepID( string storage erc1820InterfaceIDToEncode_, string storage functionSignature_ ) internal onlyOwner() returns ( bytes32 ) {
 
     bytes32 encodedERC1820InterfaceID_ = _encodeERC1820InterfaceID( erc1820InterfaceIDToEncode_ );
     require( _confirmValidERC1820InterfaceID( encodedERC1820InterfaceID_ ) );
@@ -105,6 +105,8 @@ contract WorkflowRegistry is ERC1820EnhancedRegistry, Ownable {
 
     _stepForStepID[stepIDToRegister_].addStep( true, stepIDToRegister_, encodedERC1820InterfaceIDToEncode_, encodedFunctionSignature_ );
     _stepIDs.push(stepIDToRegister_);
+
+    return stepIDToRegister_;
   }
 
   function _confirmValidFunctionSelector( bytes4 functionSelectorToValidate_ ) internal pure returns ( bool isValiedFunctionSelector_ ) {
@@ -142,7 +144,7 @@ contract WorkflowRegistry is ERC1820EnhancedRegistry, Ownable {
   /**
    * Returns 2 arrays of the interface ID and function selectors in the same order as provided.
    */
-  function _getSteps( bytes32[] stepIDs_ ) internal view returns ( bytes32[] memory stepInterfaceIDsToReturn_, bytes4[] memory stepFunctionSelectorsToReturn_ ) {
+  function _getSteps( bytes32[] stepIDs_ ) internal view returns ( bytes32[] memory , bytes4[] memory ) {
     bytes32[] memory stepInterfaceIDsToReturn_;
     bytes4[] memory stepFunctionSelectorsToReturn_;
 
@@ -193,11 +195,13 @@ contract WorkflowRegistry is ERC1820EnhancedRegistry, Ownable {
     return _getStepExecutor( stepID_ );
   }
 
-  function _getStepExecutors( bytes32[] stepIDs_ ) internal view returns ( address[] stepExecutorAddresses_ ) {
+  function _getStepExecutors( bytes32[] stepIDs_ ) internal view returns ( address[] ) {
     address[] stepExecutorAddresses_;
     for( iteration_ = 0; ( stepIDs_.length - 1 ) >= iteration_; iteration_++ ) {
       stepExecutorAddresses_.push(_getStepExecutor( stepIDs_[iteration_] ) );
     }
+
+    return stepExecutorAddresses_;
   }
 
   function registerWorkflow( bytes32 workflowID_, bytes32[] stepIDs_ ) external onlyOwner() {
@@ -223,7 +227,7 @@ contract WorkflowRegistry is ERC1820EnhancedRegistry, Ownable {
     }
   }
 
-  function _encodeWorkflow( string[] workflowERC1820InterfaaceIDs_, string[] workflowFunctionSelectors_ ) internal pure returns ( bytes32 workflowID_, bytes32[] encodedStepIDs_ ) {
+  function _encodeWorkflow( string[] workflowERC1820InterfaaceIDs_, string[] workflowFunctionSelectors_ ) internal pure returns ( bytes32, bytes32[] ) {
     require( ( workflowERC1820InterfaaceIDs_.length == workflowFunctionSelectors_.length ) );
     bytes32 encodedWorkflowID_;
     bytes32[] encodedStepIDs_;
@@ -232,10 +236,11 @@ contract WorkflowRegistry is ERC1820EnhancedRegistry, Ownable {
       encodedStepIDs_.push(stepID_);
       encodedWorkflowID_ = bytes32( encodedWorkflowID_ ^ stepID_ );
     }
+    return ( encodedWorkflowID_, encodedStepIDs_ );
   }
 
   function _getWorkflow( bytes32 workflowID_ ) internal view returns ( bytes32[] workflow_ ) {
-    return _workflowForWorkflowID[workFlowID_];
+    return _workflowForWorkflowID[workflowID_];
   }
 
   function getWorkflow( bytes32 workflowID_ ) external view returns ( bytes32[] workflow_ ) {
@@ -243,7 +248,7 @@ contract WorkflowRegistry is ERC1820EnhancedRegistry, Ownable {
   }
 
   function _setDefaultStepExecutor( address stepExecutorAddress_, string stepExecutor1820InterfaceID_ ) internal {
-    _setInterfaceImplementer( Context._msgSender(), _interfaceHash, _implementer );
+    _setInterfaceImplementer( Context._msgSender(), stepExecutor1820InterfaceID_, stepExecutorAddress_ );
   }
 
   function setDefaultStepExecutor( address stepExecutorAddress_, string stepExecutor1820InterfaceID_ ) external onlyOwner() {

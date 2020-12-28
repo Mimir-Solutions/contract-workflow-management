@@ -11,9 +11,11 @@ library Workflow {
     bytes4 _functionSelector;
   }
 
-  function addStep( Step step_, bool isActive_, bytes32 interfaceIDToAdd_, bytes4 functionSelectorToAdd_ ) internal returns ( bool isActive_ ) {
+  function addStep( Step step_, bool isActive_, bytes32 interfaceIDToAdd_, bytes4 functionSelectorToAdd_ ) internal returns ( bool ) {
     step_._isActive = isActive_;
-    step_._interfaceID = interfacaIDToAdd_;
+    step_._interfaceID = interfaceIDToAdd_;
     step_._functionSelector = functionSelectorToAdd_;
+
+    return step_._isActive;
   }
 }

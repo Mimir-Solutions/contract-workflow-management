@@ -6,6 +6,7 @@ import "hardhat/console.sol";
 import "../dependencies/holyzeppelin/contracts/introspection/ERC1820/ERC1820EnhancedRegistry.sol";
 import "../datatypes/workflow/Workflow.sol";
 import "../dependencies/holyzeppelin/contracts/datatypes/primitives/Address.sol";
+import "../dependencies/holyzeppelin/contracts/datatypes/collections/EnumerableSet.sol";
 
 // TODO: Consider implementation as a ERC1820 Registry
 /*
@@ -16,7 +17,7 @@ import "../dependencies/holyzeppelin/contracts/datatypes/primitives/Address.sol"
  * Workflow ID is generated like ERC165 interface ID;
  * bytes4(keccak256(STEP_ID)) ^ bytes4(keccak256(STEP_ID)) . . .
  */
-interface IWorkflowRegistry is IERC1820EnhancedRegistry {
+interface IWorkflowRegistry {
 
   using Workflow for Workflow.Step;
   using EnumerableSet for EnumerableSet.AddressSet;

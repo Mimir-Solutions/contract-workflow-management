@@ -3,6 +3,8 @@ pragma solidity 0.7.6;
 
 import "hardhat/console.sol";
 
+import "./interfaces/IWorkflowExecutor.sol";
+
 // Specifically has no storage to be manipulated.
 contract WorkflowExecutor is IWorkflowExecutor {
 
