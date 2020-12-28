@@ -23,28 +23,28 @@ interface IWorkflowRegistry {
   using EnumerableSet for EnumerableSet.AddressSet;
   using Address for address;
 
-  function registerStepID( string memory erc1820InterfaceIDToEncode_, string memory functionSignature_ ) internal;
+  function registerStepID( string calldata erc1820InterfaceIDToEncode_, string calldata functionSignature_ ) internal;
 
   /**
    * Returns 2 arrays of the interface ID and function selectors in the same order as provided.
    */
-  function getStep( bytes32 stepID_ ) external view returns ( bytes32 memory stepInterfaceID_, bytes4 stepFunctionSelector_ );
+  function getStep( bytes32 stepID_ ) external view returns ( bytes32 stepInterfaceID_, bytes4 stepFunctionSelector_ );
 
-  function getSteps( bytes32[] stepIDs_ ) internal view returns ( bytes32[] memory stepInterfaceIDs_, bytes4[] memory stepFunctionSelectors_ );
+  function getSteps( bytes32[] calldata stepIDs_ ) internal view returns ( bytes32[] calldata stepInterfaceIDs_, bytes4[] calldata stepFunctionSelectors_ );
 
-  function getAllSteps() external view returns ( bytes32[] stepIDs_ );
+  function getAllSteps() external view returns ( bytes32[] calldata stepIDs_ );
 
-  function registerStepExecutor( address stepExecutorAddress_, string stepExecutor1820InterfaceID_, string stepExecutorFunctionSelector_ ) external;
+  function registerStepExecutor( address stepExecutorAddress_, string calldata stepExecutor1820InterfaceID_, string calldata stepExecutorFunctionSelector_ ) external;
 
   function deregisterStepExecutor( address stepExecutorAddress_, bytes32 stepExecutor1820InterfaceID_ ) external;
 
   function getStepExecutor( bytes32 stepID_ ) internal view returns ( address stepExecutorAddress_ );
 
-  function registerWorkflow( bytes32 workflowID_, bytes32[] stepIDs_ ) external;
+  function registerWorkflow( bytes32 workflowID_, bytes32[] calldata stepIDs_ ) external;
 
-  function registerWorkflow( string[] workflowERC1820InterfaaceIDs_, string[] workflowFunctionSelectors_ ) public;
+  function registerWorkflow( string[] calldata workflowERC1820InterfaaceIDs_, string[] calldata workflowFunctionSelectors_ ) public;
 
-  function getWorkflow( bytes32 workflowID_ ) external view returns ( bytes32[] workflow_ );
+  function getWorkflow( bytes32 workflowID_ ) external view returns ( bytes32[] calldata workflow_ );
 
-  function setDefaultStepExecutor( address stepExecutorAddress_, string stepExecutor1820InterfaceID_ ) external;
+  function setDefaultStepExecutor( address stepExecutorAddress_, string calldata stepExecutor1820InterfaceID_ ) external;
 }

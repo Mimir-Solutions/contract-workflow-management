@@ -17,5 +17,5 @@ contract IWorkflowCoontroller {
   /**
    * stepExecutorArguments_ shouqld be the arguments needed to execute each step. If a step requires no arguments that index should store encoded 0.
    */
-  function executeEorkflow( bytes[] calldata stepExecutorArguments_, bytes32 calldata workflowToExecute_ ) external;
+  function executeEorkflow( bytes[] calldata stepExecutorArguments_, bytes32 workflowToExecute_ ) external;
 }

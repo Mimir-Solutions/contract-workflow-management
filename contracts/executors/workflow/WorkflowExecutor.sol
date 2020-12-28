@@ -8,7 +8,7 @@ import "./interfaces/IWorkflowExecutor.sol";
 // Specifically has no storage to be manipulated.
 contract WorkflowExecutor is IWorkflowExecutor {
 
-  function executeStep( address stepExecutor_, bytes4 functionSelector_, bytes arguements_ ) external returns ( bytes callResult_ ) {
+  function executeStep( address stepExecutor_, bytes4 functionSelector_, bytes calldata arguements_ ) external returns ( bytes calldata callResult_ ) {
     return stepExecutor_.delegatecall( abi.encodeWithSelector( functionSelector_, arguements_) );
   }
 }
