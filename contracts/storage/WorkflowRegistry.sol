@@ -3,10 +3,9 @@ pragma solidity 0.7.5;
 
 import "hardhat/console.sol";
 
-import "../dependencies/holyzeppelin/contracts/introspection/ERC1820/ERC1820EnhancedRegistry.sol";
-import "../dependencies/holyzeppelin/contracts/access/Ownable.sol";
-import "../datatypes/workflow/Workflow.sol";
-import "../dependencies/holyzeppelin/contracts/datatypes/collections/EnumerableSet.sol";
+// import "../dependencies/holyzeppelin/contracts/introspection/ERC1820/ERC1820EnhancedRegistry.sol";
+// import "../datatypes/workflow/Workflow.sol";
+// import "../dependencies/holyzeppelin/contracts/datatypes/collections/EnumerableSet.sol";
 
 // TODO: Consider implementation as a ERC1820 Registry
 /*
@@ -17,7 +16,7 @@ import "../dependencies/holyzeppelin/contracts/datatypes/collections/EnumerableS
  * Workflow ID is generated like ERC165 interface ID;
  * bytes4(keccak256(STEP_ID)) ^ bytes4(keccak256(STEP_ID)) . . .
  */
-contract WorkflowRegistry is ERC1820EnhancedRegistry, Ownable {
+contract WorkflowRegistry {
 
   // using Workflow for Workflow.Step;
   // using EnumerableSet for EnumerableSet.AddressSet;
