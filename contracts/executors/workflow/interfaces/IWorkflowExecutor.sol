@@ -4,7 +4,7 @@ pragma solidity 0.7.5;
 import "hardhat/console.sol";
 
 // Specifically has no storage to be manipulated.
-contract IWorkflowExecutor {
+interface IWorkflowExecutor {
 
   function executeStep( address stepExecutor_, bytes4 functionSelector_, bytes calldata arguements_ ) external returns ( bytes calldata callResult_ );
 }

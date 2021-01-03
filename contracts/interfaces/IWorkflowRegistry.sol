@@ -1,12 +1,8 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 pragma solidity 0.7.5;
+pragma abicoder v2;
 
 import "hardhat/console.sol";
-
-import "../dependencies/holyzeppelin/contracts/introspection/ERC1820/ERC1820EnhancedRegistry.sol";
-import "../datatypes/workflow/Workflow.sol";
-import "../dependencies/holyzeppelin/contracts/datatypes/primitives/Address.sol";
-import "../dependencies/holyzeppelin/contracts/datatypes/collections/EnumerableSet.sol";
 
 // TODO: Consider implementation as a ERC1820 Registry
 /*
@@ -19,18 +15,14 @@ import "../dependencies/holyzeppelin/contracts/datatypes/collections/EnumerableS
  */
 interface IWorkflowRegistry {
 
-  using Workflow for Workflow.Step;
-  using EnumerableSet for EnumerableSet.AddressSet;
-  using Address for address;
-
-  function registerStepID( string calldata erc1820InterfaceIDToEncode_, string calldata functionSignature_ ) internal;
+  function registerStepID( string calldata erc1820InterfaceIDToEncode_, string calldata functionSignature_ ) external;
 
   /**
    * Returns 2 arrays of the interface ID and function selectors in the same order as provided.
    */
   function getStep( bytes32 stepID_ ) external view returns ( bytes32 stepInterfaceID_, bytes4 stepFunctionSelector_ );
 
-  function getSteps( bytes32[] calldata stepIDs_ ) internal view returns ( bytes32[] calldata stepInterfaceIDs_, bytes4[] calldata stepFunctionSelectors_ );
+  function getSteps( bytes32[] calldata stepIDs_ ) external view returns ( bytes32[] calldata stepInterfaceIDs_, bytes4[] calldata stepFunctionSelectors_ );
 
   function getAllSteps() external view returns ( bytes32[] calldata stepIDs_ );
 
@@ -38,13 +30,13 @@ interface IWorkflowRegistry {
 
   function deregisterStepExecutor( address stepExecutorAddress_, bytes32 stepExecutor1820InterfaceID_ ) external;
 
-  function getStepExecutor( bytes32 stepID_ ) internal view returns ( address stepExecutorAddress_ );
+  function getStepExecutor( bytes32 stepID_ ) external view returns ( address stepExecutorAddress_ );
 
   function registerWorkflow( bytes32 workflowID_, bytes32[] calldata stepIDs_ ) external;
 
-  function registerWorkflow( string[] calldata workflowERC1820InterfaaceIDs_, string[] calldata workflowFunctionSelectors_ ) public;
+  function registerWorkflow( string[] calldata workflowERC1820InterfaaceIDs_, string[] calldata workflowFunctionSelectors_ ) external;
 
-  function getWorkflow( bytes32 workflowID_ ) external view returns ( bytes32[] calldata workflow_ );
+  function getWorkflow( bytes32 workflowID_ ) view external returns ( bytes32[] calldata workflow_ );
 
   function setDefaultStepExecutor( address stepExecutorAddress_, string calldata stepExecutor1820InterfaceID_ ) external;
 }

@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 pragma solidity 0.7.5;
+pragma abicoder v2;
 
 import "hardhat/console.sol";
 
@@ -12,7 +13,7 @@ import "hardhat/console.sol";
  * bytes4(keccak256(STEP_ID)) ^ bytes4(keccak256(STEP_ID)) . . .
  */
  // TODO implement a OwnableLocked contract that allows for defining an ownership, transfering it, and then locking it from modification.
-contract IWorkflowCoontroller {
+interface IWorkflowController {
 
   /**
    * stepExecutorArguments_ shouqld be the arguments needed to execute each step. If a step requires no arguments that index should store encoded 0.
