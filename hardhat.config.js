@@ -12,7 +12,8 @@ module.exports = {
     hardhat: {
       gas: "auto",
       gasPrice: "auto",
-      loggingEnabled: false
+      // blockGasLimit: "135000000000000000000",
+      loggingEnabled: true
     },
     hardhatNode: {
       url: "127.0.0.1",
