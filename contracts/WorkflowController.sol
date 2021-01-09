@@ -13,7 +13,7 @@ import "hardhat/console.sol";
  * bytes4(keccak256(STEP_ID)) ^ bytes4(keccak256(STEP_ID)) . . .
  */
  // TODO implement a OwnableLocked contract that allows for defining an ownership, transfering it, and then locking it from modification.
-contract WorkflowCoontroller {
+contract WorkflowController {
 
   // bytes32 public WORKFLOWEXECUTOR_ERC1820_INTERFACE_ID;
   
