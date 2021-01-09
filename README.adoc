@@ -1,11 +1,7 @@
-# pantheon-asset-management-protocol
+= Workflow 
 
-== environment installation
-**********************************************************************************
-
-npm init --yes
-
-npm install -g solc truffle-flattener 
+== Development Environment Installation
+****
 
 npm install --save-dev hardhat @nomiclabs/hardhat-waffle ethereum-waffle chai @nomiclabs/hardhat-ethers ethers mocha @nomiclabs/hardhat-truffle5 @nomiclabs/hardhat-web3 web3 @openzeppelin/test-helpers hardhat-gas-reporter nyc
 
@@ -16,3 +12,61 @@ https://marketplace.visualstudio.com/items?itemName=TheUMLetTeam.umlet
 
 Original tool available here.
 https://www.umlet.com/
+
+****
+
+== Workflow Architecture
+
+=== Abstract
+
+The intention of this architecture is to allow users to execute transaction using contracts they have approved.
+Developers define and store their protocol as a series of function calls to a series of contract addresses.
+Users approve the developer's protocol by importing the definition into their own registry.
+Transactions are executed from a front controller by sending the ID for the define protocol.
+The front controller looks up or determines the user's registry address.
+The front controller retrieves the specifics of the protocol defintion from the user's registry.
+The front controller executes the retrieved functions on the retrived contract addresses.
+
+There is a more detailed explanation of the architecture and maintenance process in the rest of this document.
+
+image::diagrams/architecture.drawio.svg[Workflow Architecture]
+
+=== Vocabulary
+
+* Step - Function selector to execute.
+** Step Id - Fuction Selector stored as bytes4.
+* Step Executor - Contract address on whoch to execute a Step.
+** Step Executor ID - Result of bitwise XOR operation of Step function selector and Step Execuotr address stored as bytes32.
+* Job - an array of Stpes in the order of execution.
+** Job ID - Result of bitwise XOR of Steps in the order of executtion stored as a bytes4.
+* WorkerSet - An array of Step Executors stored in the order of execution for a Workflow.
+** Workerset ID - The result of a bitwise XOR operation of Step Executor IDs in the order of execution.
+* Workflow - Paired values of a Job and Workset.
+** Workjflow ID - Result of bitwise XOR operation of Job ID and WorkerSet ID.
+
+=== Data model
+
+WorkflowID gets a tuple of the Job and WorkerSet to simplify call.
+This processes the nessecary look ups internally.
+It is also possible to import a workflows be reversing the process, using with function selectors or signatures.
+
+*Workflow could be consolidated into a struct*
+
+[source,solidity]
+----
+mapping( bytes32 => bytes4 ) workflowIDForJobID
+mapping( bytes32 => bytes32 ) workflowIDForWorkerSetID
+mapping( bytes4 => bytes4[] ) jobIDforSteps
+mapping( byes32 => bytes32[] ) worksetIDForStepExecutory
+----
+The rest of the data structure is stored as stated to and can be updated as stated.
+There will be encoding, view, and storage operations.
+This is being done because storage operations might need to be granularized to remain under the gas limit.
+The granularized storage might not be needed as fundamentally, a Workflow is an atomic unit of work.
+There exists potential to define Workflows of Workflows.
+But that is likely best handled by simply defining a new workflow merging the Steps.
+Or by developing a new Step Executor that wraps the workflow.
+This could be done by developing a front controller that call several workflows.
+
+There is no need to store just a Step or just a Step Executor.
+These are only relevant in the context of a Workflow.

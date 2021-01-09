@@ -3,7 +3,7 @@ pragma solidity 0.7.5;
 
 import "hardhat/console.sol";
 
-library Workflow {
+library StepStruct {
 
   struct Step {
     bool _isActive;

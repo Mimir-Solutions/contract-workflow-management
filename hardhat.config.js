@@ -12,7 +12,8 @@ module.exports = {
     hardhat: {
       gas: "auto",
       gasPrice: "auto",
-      loggingEnabled: false
+      // blockGasLimit: "135000000000000000000",
+      loggingEnabled: true
     },
     hardhatNode: {
       url: "127.0.0.1",
@@ -29,7 +30,7 @@ module.exports = {
     }
   },
   solidity: {
-    version: "0.8.0",
+    version: "0.7.5",
     settings: {
       optimizer: {
         enabled: true,
